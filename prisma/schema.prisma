@@ -1,0 +1,113 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model User {
+  id           String        @id @default(uuid())
+  email        String        @unique
+  password     String
+  role         Role          @default(USER)
+  wallets      Wallet[]
+  transactions Transaction[]
+  profile      UserProfile?
+  passwordResetToken PasswordResetToken[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@map("users")
+}
+
+model UserProfile {
+  id             String   @id @default(uuid())
+  userId         String   @unique
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  firstName      String?
+  lastName       String?
+  phoneNumber    String?
+  address        String?
+  city           String?
+  state          String?
+  zipCode        String?
+  country        String?
+  profilePicture String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Wallet {
+  id           String        @id @default(uuid())
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  balance      Decimal       @default(0.00)
+  currency     String        @default("USD")
+  transactions Transaction[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@map("wallets")
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+  TRANSFER
+  RECEIVE
+}
+
+
+model Transaction {
+  id                String          @id @default(uuid())
+  walletId          String
+  wallet            Wallet          @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  userId            String
+  user              User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount            Decimal
+  transactionType   TransactionType
+  description       String?
+  status            String          @default("PENDING")
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  @@map("transactions")
+}
+
+model Event {
+  id String @id @default(uuid())
+  userId String?
+  actionType String?
+  actionName String?
+  payload Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("events")
+}
+
+model PasswordResetToken {
+  id String @id @default(uuid())
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("password_reset_tokens")
+}

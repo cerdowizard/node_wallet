@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "outDir": "./dist",
+    "rootDir": "./",
+    "types": ["bun-types"]
+  },
+  "include": ["**/*.ts", "types/**/*.d.ts"],
+  "exclude": ["node_modules"]
+}

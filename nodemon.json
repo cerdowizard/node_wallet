@@ -1,0 +1,12 @@
+{
+    "watch": [
+        "."
+    ],
+    "ext": "ts",
+    "exec": "bun run index.ts",
+    "ignore": [
+        "node_modules",
+        "dist",
+        "prisma/migrations"
+    ]
+}
