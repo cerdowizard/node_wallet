@@ -1,5 +1,6 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import authRouter from "./routes/auth_router";
+import uploadRouter from "./routes/upload_router";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import { specs } from "./config/swagger";
@@ -22,6 +23,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 // API routes
 app.use("/api/auth", authRouter);
+app.use("/api/", uploadRouter);
 
 
 /**

@@ -10,6 +10,7 @@ interface ResetPasswordRequest {
     token: string;
     newPassword: string;
 }
+
 /**
  * @swagger
  * /api/auth/reset-password:

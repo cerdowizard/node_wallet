@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ApiResponse } from "./auth";
+import { ApiResponse } from "../../utils/apiResponse";
 import { PrismaClient } from "../../generated/prisma";
 import { verifyRefreshToken, generateAccessToken, generateRefreshToken } from "../../utils/jwtUtils";
 

@@ -28,6 +28,7 @@ model User {
   transactions Transaction[]
   profile      UserProfile?
   passwordResetToken PasswordResetToken[]
+  documentFiles DocumentFile[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 
@@ -110,4 +111,18 @@ model PasswordResetToken {
   updatedAt DateTime @updatedAt
 
   @@map("password_reset_tokens")
+}
+
+model DocumentFile {
+  id String @id @default(uuid())
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fileUrl String
+  fileType String?
+  fileSize Int?
+  fileName String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("document_files")
 }

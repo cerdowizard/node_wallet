@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { createUser } from "../../db_ops/writers/auth_writer";
 import { PrismaClient } from "../../generated/prisma";
 import { saveEventToDB } from "../../db_ops/writers/event_writer";
+import { ApiResponse } from "../../utils/apiResponse";
 
 const prisma = new PrismaClient();
 
@@ -16,14 +17,6 @@ interface RegisterUserRequest {
   state: string;
   zipCode: string;
   country: string;
-}
-
-export interface ApiResponse {
-  success: boolean;
-  status: number;
-  message: string;
-  data?: any;
-  payload?: any;
 }
 
 /**
