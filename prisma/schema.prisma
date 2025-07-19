@@ -55,6 +55,7 @@ model UserProfile {
 model Wallet {
   id           String        @id @default(uuid())
   userId       String
+  walletAddress String?      @unique
   user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   balance      Decimal       @default(0.00)
   currency     String        @default("USD")

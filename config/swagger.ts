@@ -18,7 +18,20 @@ const options = {
         description: 'Development server'
       }
     ],
+    security: [
+      {
+        bearerAuth: []
+      }
+    ],
     components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+          description: 'Enter your JWT token in the format: Bearer <token>'
+        }
+      },
       schemas: {
         RegisterUserRequest: {
           type: 'object',

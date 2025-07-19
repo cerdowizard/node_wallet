@@ -1,9 +1,11 @@
 import express, { Request, Response, NextFunction } from "express";
 import authRouter from "./routes/auth_router";
 import uploadRouter from "./routes/upload_router";
+import userProfileRouter from "./routes/user_profile_router";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import { specs } from "./config/swagger";
+import walletRouter from "./routes/wallet";
 const app = express();
 
 // CORS configuration
@@ -23,7 +25,9 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 // API routes
 app.use("/api/auth", authRouter);
-app.use("/api/", uploadRouter);
+app.use("/api/v1/upload", uploadRouter);
+app.use("/api/v1/user", userProfileRouter);
+app.use("/api/v1/wallet", walletRouter);
 
 
 /**
